@@ -54,9 +54,7 @@ IF LSS $i $len
     ]
     IF SEQL $c $LBR
     [
-        JMP $push
-        > $push_ret
-
+        FCALL $push
         JMP $endif
     ]
     IF SEQL $c $RBR
@@ -72,8 +70,7 @@ IF LSS $i $len
             BYE 1
         ]
 
-        JMP $pop
-        > $pop_ret
+        FCALL $pop
 
         ARR $pairs $i $temp
         ARR $pairs $temp $i
@@ -191,19 +188,18 @@ BYE 0
 
 > $push
 
-ADD $tos $tos 1
-INT $tos $tos
+    ADD $tos $tos 1
+    INT $tos $tos
 
-ARR $stk $tos $i
+    ARR $stk $tos $i
 
-JMP $push_ret
-
+    FRET
 
 > $pop
 
-ARRV $temp $stk $tos
+    ARRV $temp $stk $tos
 
-SUB $tos $tos 1
-INT $tos $tos
+    SUB $tos $tos 1
+    INT $tos $tos
 
-JMP $pop_ret
+    FRET
